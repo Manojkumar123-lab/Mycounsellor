@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>ViewAllEnquiries</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/getdashboard">Ashok It</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/enquiry">AddEnquiries   </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  href="/getEnquirys">ViewEnquiries    </a>
+        </li>
+         <li class="nav-item">
+          <a onclick="return confirm('Are u sure u want to logout ? ');" class="btn btn-danger " href="/logout">Logout</a>
+        </li>
+    </div>
+  </div>
+</nav>
+	<div class="container">
+		<h2>ViewEnquiries</h2>
+		<h2><a href="/enquiry">AddEnquiry</a></h3>
+		<form th:object="${enquiry}" th:action="@{/filter-enqs}" method="post">
+			<table>
+			
+					<td>ClassMode</td>
+					<td>
+						<select th:field="*{Mode}">
+							<option value="">-select-</option>
+							<option value="Offline">Offline</option>
+							<option value="Online">Online</option>
+						</select>
+					</td>
+				
+				<td>Course</td>
+				<td><select th:field="*{course}">
+					<option value="">-select-</option>
+					<option value="JavaFullStack">JavaFullStack</option>
+					<option value="DevopsWithAWS">DevopsWithAWS</option>
+					<option value="PythonFullStack">PythonFullStack</option>
+					<option value="ReactJs">ReactJs</option>
+					<option value="Angular">Angular</option>
+				</select></td>
+				<td>Status</td>
+				<td>
+					<select th:field="*{status}">
+						<option value="">-select-</option>
+						<option value="new">new</option>
+						<option value="enrolled">enrolled</option>
+						<option value="lost">lost</option>
+					</select>
+				</td>
+				<td><input type="submit" value="Search" class="btn btn-primary"/></td>
+			</table>
+
+		</form>
+		<table class="table table-bordered table-stripped" border="3">
+			<thead>
+				<th>Name</th>
+				<th>Phno</th>
+				<th>ClasMode</th>
+				<th>Course</th>
+				<th>Status</th>
+				<th>CoounsellorId</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<tr th:each="enq:${allenquirys}">
+					<td th:text="${enq.stuname}"></td>
+					<td th:text="${enq.stuphno}"></td>
+					<td th:text="${enq.mode}"></td>
+					<td th:text="${enq.course}"></td>
+					<td th:text="${enq.status}"></td>
+					`		<td th:text="${enq.counsellor.counsellorId}"></td>
+		             <td> <a th:href="@{/updateEnquiry(enqId=${enq.enqId})}"> Edit</td>	           		             
+				</tr>
+			</tbody>
+		</table>
+
+
+	</div>
+
+</body>
+
+</html>
